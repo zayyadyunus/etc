@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Rahma 💕</title>
+  <style>
+    :root {
+      --pink: #ff6f91;
+      --pink-soft: #ffb3c6;
+      --cream: #fff0f3;
+      --deep: #7a2e46;
+      --gold: #e6a23c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(160deg, #ffe3ec 0%, #fff0f3 50%, #ffe9f0 100%);
+      color: var(--deep);
+      min-height: 100vh;
+      display: flex;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    /* Floating hearts background */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .hearts span {
+      position: absolute;
+      bottom: -40px;
+      font-size: 20px;
+      opacity: 0;
+      animation: float-up linear infinite;
+    }
+    @keyframes float-up {
+      0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(255, 111, 145, 0.25);
+      padding: 44px 36px;
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(255, 179, 198, 0.5);
+    }
+
+    .page { display: none; animation: fade-in 0.6s ease; }
+    .page.active { display: block; }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-label {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--pink);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 30px;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      color: var(--deep);
+    }
+
+    .emoji-big { font-size: 52px; margin-bottom: 16px; }
+
+    p.hint { color: #a86b7f; margin-bottom: 26px; font-size: 15px; }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 15px 18px;
+      font-size: 17px;
+      border: 2px solid var(--pink-soft);
+      border-radius: 14px;
+      outline: none;
+      text-align: center;
+      color: var(--deep);
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus { border-color: var(--pink); }
+
+    button {
+      margin-top: 20px;
+      background: linear-gradient(135deg, var(--pink) 0%, #ff8fab 100%);
+      color: #fff;
+      border: none;
+      padding: 14px 40px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255, 111, 145, 0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(255, 111, 145, 0.5); }
+    button:active { transform: translateY(0); }
+
+    .error {
+      color: #d6336c;
+      font-size: 14px;
+      margin-top: 14px;
+      min-height: 20px;
+      font-weight: 600;
+    }
+
+    /* Letter styling */
+    .letter {
+      text-align: left;
+      line-height: 1.9;
+      font-size: 16.5px;
+      color: #5c2338;
+    }
+    .letter h1 { text-align: center; margin-bottom: 24px; }
+    .letter .salutation { font-weight: 700; font-size: 19px; margin-bottom: 18px; }
+    .letter p { margin-bottom: 16px; }
+    .letter .stanza p { margin-bottom: 4px; }
+    .letter .stanza { margin-bottom: 20px; }
+    .letter .signoff { margin-top: 26px; font-style: italic; }
+    .letter .signoff .name { font-weight: 700; font-style: normal; font-size: 18px; }
+
+    .fine { margin-top: 14px; font-size: 13px; color: #b98; }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <div class="card">
+    <!-- Page 1 -->
+    <section class="page active" id="page1">
+      <div class="emoji-big">🎂</div>
+      <div class="step-label">Question 1 of 2</div>
+      <h1>How old are you turning today?</h1>
+      <p class="hint">Type the number to continue 💕</p>
+      <input type="text" id="answer1" placeholder="Your answer..." autocomplete="off" />
+      <div class="error" id="error1"></div>
+      <button onclick="checkAge()">Next →</button>
+    </section>
+
+    <!-- Page 2 -->
+    <section class="page" id="page2">
+      <div class="emoji-big">👑</div>
+      <div class="step-label">Question 2 of 2</div>
+      <h1>What is my nickname for you?</h1>
+      <p class="hint">You know this one 😉</p>
+      <input type="text" id="answer2" placeholder="Your answer..." autocomplete="off" />
+      <div class="error" id="error2"></div>
+      <button onclick="checkNickname()">Reveal my letter →</button>
+    </section>
+
+    <!-- Page 3: The Letter -->
+    <section class="page" id="page3">
+      <div class="letter">
+        <p class="salutation">Dearest Rahma,</p>
+
+        <p>Happy birthday to you.</p>
+
+        <p>On this day, I pray that the many more years in your life are filled with happiness and joy.
+        Words cannot describe how glad I am to have you in my life but I will try regardless.</p>
+
+        <p>When I said that I knew I had feelings for you the first day I saw you, I meant that in every single way.</p>
+
+        <div class="stanza">
+          <p>I liked that you were absolutely beautiful in your abaya the first time I saw you.</p>
+          <p>I liked that you did not hide our displeasure with the situation we were in.</p>
+          <p>I liked that you did not try to say a word on the drive to a house that you have never been to.</p>
+          <p>I liked that you had motion sickness (I found that cute, sorry).</p>
+          <p>I liked that you prayed when you got to this house you had never been to.</p>
+          <p>I liked that you took a snap of me.</p>
+        </div>
+
+        <p>Fast forward to today.</p>
+
+        <div class="stanza">
+          <p>You are the most beautiful, smartest, funniest woman I have met with the best laughter and the purest heart.</p>
+          <p>You are really special to me and I pray I get to show you just how much you mean to me.</p>
+        </div>
+
+        <p>So, happy 19th to my one and only princess.</p>
+
+        <div class="signoff">
+          Yours truly,<br />
+          <span class="name">Zayyad</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function show(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function checkAge() {
+      const val = document.getElementById('answer1').value.trim().toLowerCase();
+      const err = document.getElementById('error1');
+      // Accept "19", "nineteen", or anything containing 19 (e.g. "19 years")
+      if (val.includes('19') || val.includes('nineteen')) {
+        err.textContent = '';
+        show('page2');
+        document.getElementById('answer2').focus();
+      } else {
+        err.textContent = 'Not quite — try again 💗';
+      }
+    }
+
+    function checkNickname() {
+      const val = document.getElementById('answer2').value.trim().toLowerCase();
+      const err = document.getElementById('error2');
+      if (val === 'princess') {
+        err.textContent = '';
+        burst();
+        show('page3');
+      } else {
+        err.textContent = 'Hmm, that is not it — think again 👑';
+      }
+    }
+
+    // Enter key support
+    document.getElementById('answer1').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkAge();
+    });
+    document.getElementById('answer2').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkNickname();
+    });
+
+    // Floating hearts
+    const heartChars = ['💕', '💖', '💗', '💝'];
+    const container = document.getElementById('hearts');
+    function spawnHeart() {
+      const s = document.createElement('span');
+      s.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.fontSize = 14 + Math.random() * 22 + 'px';
+      const dur = 7 + Math.random() * 8;
+      s.style.animationDuration = dur + 's';
+      container.appendChild(s);
+      setTimeout(() => s.remove(), dur * 1000);
+    }
+    setInterval(spawnHeart, 700);
+    for (let i = 0; i < 8; i++) setTimeout(spawnHeart, i * 200);
+
+    // Celebratory burst when the letter is revealed
+    function burst() {
+      for (let i = 0; i < 40; i++) {
+        setTimeout(spawnHeart, i * 40);
+      }
+    }
+
+    document.getElementById('answer1').focus();
+  </script>
+</body>
+</html>
